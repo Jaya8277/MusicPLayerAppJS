@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="
+    https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Loutus Lane</h2>
+            <h3 id="artist">The Loyalists</h3>
+            <div class="img_container">
+                <img src="images/1.jfif" alt="">
+            </div>
+
+            <audio src="music/song1.mp3"></audio>
+
+            <div class="music_controls">
+                <i class="fa fa-backward" id="prev" title="previous" aria-hidden="true"></i>
+                <i class="fa fa-play main-button" id="play"  title="play" aria-hidden="true"></i>
+                <i class="fa fa-forward" id="next" title="next" aria-hidden="true"></i>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const music = document.querySelector('audio');
+        const img = document.querySelector('img');
+        const play = document.getElementById('play');
+        const artist = document.getElementById('artist');
+        const title = document.getElementById('title');
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+
+
+        const songs = [{
+            name: "song1",
+            title:"Loutus Lane",
+            artist: "the loyalists",
+        },
+        {
+            name: "song2",
+            title:"sappheiros",
+            artist: "Aurora",
+        },
+        {
+            name: "song3",
+            title:"Walking Firiri",
+            artist: "Gorkhali Takma",
+        },
+    ];
+        let isPlaying = false;
+
+                // for play function 
+       const playMusic = () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+
+        // for pause function 
+       const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause","fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', () => {
+            // if(isPlaying) {
+            //     pauseMusic();
+            // }
+            // else{
+            //     playMusic();
+            // }
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+
+        // change the music data
+
+
+        const loadSongs = (songs) => {
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/"+ songs.name+".mp3";
+            img.src = "images/"+ songs.name+".jpg";
+
+        };
+
+        songIndex = 0;
+        // loadSongs(songs[2]);
+
+        const nextSong = () => {
+            // songIndex++;
+            songIndex = (songIndex + 1) % songs.length;
+        loadSongs(songs[songIndex]);
+        playMusic();
+        };
+
+        const prevSong = () => {
+            // songIndex++;
+            songIndex = (songIndex - 1 +  songs.length) % songs.length;
+        loadSongs(songs[songIndex]);
+        playMusic();
+        };
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+
+    </script>
+</body>
+</html>
